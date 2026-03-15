@@ -1,8 +1,8 @@
-from flask import Flask, render_template, request
+from flask import Flask, render_template, request,jsonify
 from cipher.caesar import CaesarCipher
 from cipher.vigenere import VigenereCipher
 from cipher.playfair import PlayFairCipher
-from cipher.railfence import RailFenceCipher
+from cipher.Railfence.railfence_cipher import RailFenceCipher
 from cipher.transposition import TranspositionCipher
 
 app = Flask(__name__)
@@ -43,7 +43,7 @@ def vigenere_encrypt():
     text = request.form['inputPlainText']
     key = request.form['inputKeyPlain']
     vigenere = VigenereCipher()
-    encrypted_text = vigenere.encrypt_text(text, key)
+    encrypted_text = vigenere.vigenere_encrypt(text, key)
     return f"text: {text}<br>/key: {key}<br>/encrypted text: {encrypted_text}"
 
 @app.route("/vigenere/decrypt", methods=['POST'])
@@ -51,7 +51,7 @@ def vigenere_decrypt():
     text = request.form['inputCipherText']
     key = request.form['inputKeyCipher']
     vigenere = VigenereCipher()
-    decrypted_text = vigenere.decrypt_text(text, key)
+    decrypted_text = vigenere.vigenere_decrypt(text, key)
     return f"text: {text}<br>/key: {key}<br>/decrypted text: {decrypted_text}"
 
 
