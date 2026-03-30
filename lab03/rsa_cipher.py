@@ -13,11 +13,11 @@ class MyApp(QMainWindow):
         self.ui = Ui_MainWindow()
         self.ui.setupUi(self)
 
-        self.ui.btn_gen_keys.clicked.connect(self.call_api_gen_keys)
-        self.ui.btn_encrypt.clicked.connect(self.call_api_encrypt)
-        self.ui.btn_decrypt.clicked.connect(self.call_api_decrypt)
-        self.ui.btn_sign.clicked.connect(self.call_api_sign)
-        self.ui.btn_verify.clicked.connect(self.call_api_verify)
+        self.ui.btnGeneratekeys.clicked.connect(self.call_api_gen_keys)
+        self.ui.btnEncrypt.clicked.connect(self.call_api_encrypt)
+        self.ui.btnDecrypt.clicked.connect(self.call_api_decrypt)
+        self.ui.btnSign.clicked.connect(self.call_api_sign)
+        self.ui.btnVerify.clicked.connect(self.call_api_verify)
 
     # ---------------- GENERATE KEYS ----------------
     def call_api_gen_keys(self):
@@ -37,7 +37,7 @@ class MyApp(QMainWindow):
     # ---------------- ENCRYPT ----------------
     def call_api_encrypt(self):
         payload = {
-            "message": self.ui.txt_plain_text.toPlainText(),
+            "message": self.ui.txtPlaintext.toPlainText(),
             "key_type": "public"
         }
 
@@ -46,7 +46,7 @@ class MyApp(QMainWindow):
 
             if response.status_code == 200:
                 data = response.json()
-                self.ui.txt_cipher_text.setPlainText(data.get("encrypted_message", ""))
+                self.ui.txtCiphertext.setPlainText(data.get("encrypted_message", ""))
 
                 QMessageBox.information(self, "Success", "Encrypted Successfully")
             else:
@@ -59,7 +59,7 @@ class MyApp(QMainWindow):
     # ---------------- DECRYPT ----------------
     def call_api_decrypt(self):
         payload = {
-            "ciphertext": self.ui.txt_cipher_text.toPlainText(),
+            "ciphertext": self.ui.txtCiphertext.toPlainText(),
             "key_type": "private"
         }
 
@@ -68,7 +68,7 @@ class MyApp(QMainWindow):
 
             if response.status_code == 200:
                 data = response.json()
-                self.ui.txt_plain_text.setPlainText(data.get("decrypted_message", ""))
+                self.ui.txtPlaintext.setPlainText(data.get("decrypted_message", ""))
 
                 QMessageBox.information(self, "Success", "Decrypted Successfully")
             else:
@@ -81,7 +81,7 @@ class MyApp(QMainWindow):
     # ---------------- SIGN ----------------
     def call_api_sign(self):
         payload = {
-            "message": self.ui.txt_info.toPlainText()
+            "message": self.ui.txtInformation.toPlainText()
         }
 
         try:
@@ -89,7 +89,7 @@ class MyApp(QMainWindow):
 
             if response.status_code == 200:
                 data = response.json()
-                self.ui.txt_sign.setPlainText(data.get("signature", ""))
+                self.ui.txtSignature.setPlainText(data.get("signature", ""))
 
                 QMessageBox.information(self, "Success", "Signed Successfully")
             else:
@@ -102,8 +102,8 @@ class MyApp(QMainWindow):
     # ---------------- VERIFY ----------------
     def call_api_verify(self):
         payload = {
-            "message": self.ui.txt_info.toPlainText(),
-            "signature": self.ui.txt_sign.toPlainText()
+            "message": self.ui.txtInformation.toPlainText(),
+            "signature": self.ui.txtSignature.toPlainText()
         }
 
         try:
